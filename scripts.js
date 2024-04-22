@@ -1,34 +1,50 @@
-// scripts.js
-const recipes = [
-  { title: "Scrambled Eggs", category: "breakfast" },
-  { title: "Chicken Salad", category: "lunch" },
-  { title: "Spaghetti Bolognese", category: "dinner" },
-  // Add more recipes here
-];
+const API_KEY = "92f0263949a74da9877e2fb48b92fbf9";
+const recipeListEl = document.getElementById("recipe-list");
 
-function displayRecipes(category = "") {
-  const container = document.getElementById("recipe-container");
-  container.innerHTML = "";
+function displayRecipes(recipes) {
+  recipeListEl.innerHTML = "";
+  recipes.forEach((recipe) => {
+    const recipeItemEl = document.createElement("li");
+    recipeItemEl.classList.add("recipe-item");
+    recipeImageEl = document.createElement("img");
+    recipeImageEl.src = recipe.image;
+    recipeImageEl.alt = "recipe image";
 
-  recipes.forEach(recipe => {
-    if (category === "" || recipe.category === category) {
-      const card = document.createElement("div");
-      card.classList.add("recipe-card");
-      card.textContent = recipe.title;
-      container.appendChild(card);
-    }
+    recipeTitleEl = document.createElement("h2");
+    recipeTitleEl.innerText = recipe.title;
+
+    recipeIngredientsEl = document.createElement("p");
+    recipeIngredientsEl.innerHTML = `
+        <strong>Ingredients:</strong> ${recipe.extendedIngredients
+          .map((ingredient) => ingredient.original)
+          .join(", ")}
+    `;
+
+    recipeLinkEl = document.createElement("a");
+    recipeLinkEl.href = recipe.sourceUrl;
+    recipeLinkEl.innerText = "View Recipe";
+
+    recipeItemEl.appendChild(recipeImageEl);
+    recipeItemEl.appendChild(recipeTitleEl);
+    recipeItemEl.appendChild(recipeIngredientsEl);
+    recipeItemEl.appendChild(recipeLinkEl);
+    recipeListEl.appendChild(recipeItemEl);
   });
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  displayRecipes();
+async function getRecipes() {
+  const response = await fetch(
+    `https://api.spoonacular.com/recipes/random?number=6&apiKey=${API_KEY}`
+  );
 
-  document.querySelectorAll(".category-filter").forEach(filter => {
-    filter.addEventListener("click", () => {
-      const category = filter.dataset.category;
-      document.querySelector(".active").classList.remove("active");
-      filter.classList.add("active");
-      displayRecipes(category);
-    });
-  });
-});
+  const data = await response.json();
+
+  return data.recipes;
+}
+
+async function init() {
+  const recipes = await getRecipes();
+  displayRecipes(recipes);
+}
+
+init();
