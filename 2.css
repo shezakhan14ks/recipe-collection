@@ -1,0 +1,48 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 10;
+    padding: 0;
+  background-image: url("https://images.unsplash.com/photo-1605210055791-6c1ebc17f718?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MTMwMjM0NjF8&ixlib=rb-4.0.3&q=85");
+    background-size: cover;
+    background-position: centre;
+    background-repeat: no-repeat;
+  
+}
+
+header {
+    background-color: #333;
+    color: white;
+    padding: 30px;
+    text-align: center;
+}
+
+#recipes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+.recipe {
+    width: 400px;
+    margin: 20px;
+    padding: 15px;
+    border: 1px solid purple;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(, 0, 0, 0.1);
+}
+
+.recipe img {
+    width: 100%;
+    border-radius: 5px;
+}
+
+.recipe h2 {
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+.recipe p {
+    margin-top: 10px;
+    color: black;
+}
